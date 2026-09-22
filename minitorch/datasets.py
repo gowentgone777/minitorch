@@ -5,6 +5,7 @@ from typing import List, Tuple
 
 
 def make_pts(N: int) -> List[Tuple[float, float]]:
+    "Сгенерировать равномерно N случайных 2D-точек с координатами из [0, 1)"
     X = []
     for i in range(N):
         x_1 = random.random()
@@ -21,6 +22,7 @@ class Graph:
 
 
 def simple(N: int) -> Graph:
+    "Линейно разделимый датасет: класс зависит только от x_1 (порог 0.5)."
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -30,6 +32,7 @@ def simple(N: int) -> Graph:
 
 
 def diag(N: int) -> Graph:
+    "Линейно разделимый датасет: граница диагональ x_1 + x_2 = 0.5."
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -39,6 +42,7 @@ def diag(N: int) -> Graph:
 
 
 def split(N: int) -> Graph:
+    "Датасет с двумя параллельными полосами по краям: класс 1 при x_1 < 0.2 или x_1 > 0.8."
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -48,6 +52,7 @@ def split(N: int) -> Graph:
 
 
 def xor(N: int) -> Graph:
+    "Датасет по правилу XOR: не разделим линейно, нужна нелинейная граница"
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -57,6 +62,7 @@ def xor(N: int) -> Graph:
 
 
 def circle(N: int) -> Graph:
+    "Датасет с круговой границей: класс зависит от расстояния до центра (0.5, 0.5)"
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -67,6 +73,8 @@ def circle(N: int) -> Graph:
 
 
 def spiral(N: int) -> Graph:
+    "Датасет из двух спиралей: граница классов не линейно разделима"
+
     def x(t: float) -> float:
         return t * math.cos(t) / 20.0
 
@@ -82,7 +90,7 @@ def spiral(N: int) -> Graph:
         for i in range(5 + 0, 5 + N // 2)
     ]
     y2 = [0] * (N // 2) + [1] * (N // 2)
-    return Graph(N, X, y2)
+    return Graph(len(X), X, y2)
 
 
 datasets = {
